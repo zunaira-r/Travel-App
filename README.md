@@ -1,4 +1,4 @@
-# ✈️ Travel App
+# Travel App
 
 ## 📱 Project Overview
 The Travel App is a modern Android application built using Jetpack Compose and Kotlin that allows users to explore different travel destinations.  
@@ -7,11 +7,11 @@ Each destination features an image, description, and an option to view more deta
 ---
 
 ## 🧭 Features
-- 🌍 **Home Screen:** Displays a list of travel destinations with images and descriptions.
-- ❤️ **Favorite Functionality:** Users can mark destinations as favorites.
-- 📄 **Details Screen:** Shows expanded information for the selected destination.
-- 🔄 **Navigation:** Implemented using Jetpack Compose Navigation.
-- 🧱 **Architecture:** MVVM (Model–View–ViewModel) structure for scalability and maintainability.
+-  **Home Screen:** Displays a list of travel destinations with images and descriptions.
+-  **Favorite Functionality:** Users can mark destinations as favorites.
+-  **Details Screen:** Shows expanded information for the selected destination.
+-  **Navigation:** Implemented using Jetpack Compose Navigation.
+-  **Architecture:** MVVM (Model–View–ViewModel) structure for scalability and maintainability.
 
 ---
 
@@ -27,13 +27,16 @@ Each destination features an image, description, and an option to view more deta
 
 ---
 
-## 🖼️ Screenshots
+## 📷 Screenshots
 
-### 🏠 Home Screen
-![Home Screen](screenshots/home_screen.png)
+### Home Screen
+<img src="screenshots/home_screen.png" width="300" alt="Home Screen">
 
-### 📖 Details Screen
-![Details Screen](screenshots/details_screen.png)
+### Details Screen
+<img src="screenshots/details_screen.png" width="300" alt="Details Screen">
+
+### Favorites Screen
+coming soon!
 
 ---
 
