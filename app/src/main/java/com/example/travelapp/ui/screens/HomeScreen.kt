@@ -86,13 +86,9 @@ fun DestinationCard(
     }
 }
 
-
-/** Optional preview that uses a fake ViewModel replacement so the preview can show something.
- *  This avoids requiring NavController during preview. */
 @Preview(showBackground = true)
 @Composable
 fun HomeScreenPreview() {
-    // Small preview list so preview works even without viewModel injection
     val sampleDestinations = listOf(
         Destination(
             1,
