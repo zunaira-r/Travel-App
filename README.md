@@ -45,7 +45,7 @@ coming soon!
 | Name           | Email                     | CWID      |
 |----------------|---------------------------|-----------|
 | Zunaira Rahat  | zunaira@csu.fullerton.edu | 848850806 |
-| Kamilo Ramirez | kamilor7@csu.fullerton.edu       | [CWID]    |
+| Kamilo Ramirez | kamilor7@csu.fullerton.edu       | 885306811    |
 | Jenny Tran     | tranj1215@csu.fullerton.edu      | [CWID]    |
 
 ---
