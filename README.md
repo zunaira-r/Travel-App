@@ -30,7 +30,6 @@ Each destination features an image, description, and an option to view more deta
 ## 📷 Screenshots
 
 ### Home Screen
-<img src="screenshots/home_screen.png" width="300" alt="Home Screen">
 <img width="300" height="649" alt="Screenshot 2025-10-22 at 9 28 23 PM" src="https://github.com/user-attachments/assets/accaf1d9-ae52-4ed4-80ec-29c56ab735ca" />
 <img width="328" height="655" alt="Screenshot 2025-10-22 at 9 29 25 PM" src="https://github.com/user-attachments/assets/4a50c55c-63fd-4ac8-be27-67c7aa63a02f" />
 
