@@ -7,6 +7,7 @@ import com.example.travelapp.R
 
 class DestinationsViewModel : ViewModel() {
 
+
     val destinations = listOf(
         Destination(
             id = 1,
@@ -36,5 +37,9 @@ class DestinationsViewModel : ViewModel() {
         } else {
             favoriteDestinations.add(destination)
         }
+    }
+
+    fun isFavorite(destination: Destination): Boolean {
+        return favoriteDestinations.contains(destination)
     }
 }

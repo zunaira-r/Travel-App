@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.travelapp.ui.screens.HomeScreen
 import com.example.travelapp.ui.screens.DetailsScreen
+import com.example.travelapp.ui.screens.FavoritesScreen
 import com.example.travelapp.viewModel.DestinationsViewModel
 
 @Composable
@@ -14,13 +15,17 @@ fun AppNavGraph(navController: NavHostController, viewModel: DestinationsViewMod
         navController = navController,
         startDestination = "home"
     ) {
+
         composable("home") {
             HomeScreen(navController = navController, viewModel = viewModel)
         }
+
         composable("details/{destinationId}") { backStackEntry ->
             val destinationId = backStackEntry.arguments?.getString("destinationId")?.toInt()
             DetailsScreen(destinationId = destinationId, viewModel = viewModel)
         }
+        composable("favorites") {
+            FavoritesScreen(navController = navController, viewModel = viewModel)
+        }
     }
 }
-

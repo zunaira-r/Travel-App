@@ -6,13 +6,10 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.MaterialTheme
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -26,8 +23,6 @@ import androidx.navigation.NavController
 
 // For Previews (optional)
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.remember
 import com.example.travelapp.Destination
 import com.example.travelapp.R
 import com.example.travelapp.viewModel.DestinationsViewModel
@@ -37,10 +32,23 @@ import com.example.travelapp.viewModel.DestinationsViewModel
 fun HomeScreen(
     navController: NavController? = null,
     viewModel: DestinationsViewModel = viewModel()
-
 ) {
     Scaffold(
-        topBar = { TopAppBar(title = { Text("✈\uFE0F Choose Your Next Travel Destination") }) }
+        topBar = {
+            TopAppBar(
+                title = { Text("✈️ Choose Your Next Travel Destination") },
+                actions = {
+                    // ❤️ Button to go to Favorites screen
+                    IconButton(onClick = { navController?.navigate("favorites") }) {
+                        Icon(
+                            imageVector = Icons.Filled.Favorite,
+                            contentDescription = "Go to Favorites",
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+                    }
+                }
+            )
+        }
     ) { padding ->
         LazyColumn(
             contentPadding = padding,
@@ -52,6 +60,7 @@ fun HomeScreen(
             items(viewModel.destinations) { destination ->
                 DestinationCard(
                     destination = destination,
+                    viewModel = viewModel,
                     onClick = { navController?.navigate("details/${destination.id}") }
                 )
             }
@@ -62,64 +71,120 @@ fun HomeScreen(
 @Composable
 fun DestinationCard(
     destination: Destination,
+    viewModel: DestinationsViewModel,
     onClick: () -> Unit
 ) {
+    // Checks if destination is already favorited
+    val isFavorite = viewModel.favoriteDestinations.contains(destination)
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .clickable { onClick() },
         elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
     ) {
-        Row(modifier = Modifier.padding(16.dp)) {
-            Image(
-                painter = painterResource(id = destination.imageRes),
-                contentDescription = destination.name,
-                modifier = Modifier.size(100.dp)
-            )
-            Spacer(modifier = Modifier.width(16.dp))
-            Column(modifier = Modifier.weight(1f)) {
-                Text(destination.name, style = MaterialTheme.typography.titleMedium)
-                Spacer(modifier = Modifier.height(4.dp))
-                Text(destination.description, style = MaterialTheme.typography.bodyMedium)
+        Row(
+            modifier = Modifier
+                .padding(16.dp)
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Row(modifier = Modifier.weight(1f)) {
+                Image(
+                    painter = painterResource(id = destination.imageRes),
+                    contentDescription = destination.name,
+                    modifier = Modifier.size(100.dp)
+                )
+                Spacer(modifier = Modifier.width(16.dp))
+                Column {
+                    Text(destination.name, style = MaterialTheme.typography.titleMedium)
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Text(destination.description, style = MaterialTheme.typography.bodyMedium)
+                }
+            }
+
+            // ❤️ Heart toggle button
+            IconButton(onClick = { viewModel.toggleFavorite(destination) }) {
+                Icon(
+                    imageVector = if (isFavorite)
+                        Icons.Filled.Favorite
+                    else
+                        Icons.Filled.FavoriteBorder,
+                    contentDescription = "Favorite",
+                    tint = if (isFavorite)
+                        MaterialTheme.colorScheme.primary
+                    else
+                        MaterialTheme.colorScheme.onSurface
+                )
             }
         }
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Preview(showBackground = true)
 @Composable
 fun HomeScreenPreview() {
     val sampleDestinations = listOf(
         Destination(
-            1,
-            "Japan",
-            R.drawable.japan,
-            "Known for its cherry blossoms but has so much more. "
+            id = 1,
+            name = "Japan",
+            imageRes = R.drawable.japan,
+            description = "Known for its cherry blossoms but has so much more."
         ),
-        Destination(2, "Hawaii", R.drawable.hawaii, "Escape to the island breeze!"),
-        Destination(3, "France", R.drawable.france, "The ever-famous, city of love.")
+        Destination(
+            id = 2,
+            name = "Hawaii",
+            imageRes = R.drawable.hawaii,
+            description = "Escape to the island breeze!"
+        ),
+        Destination(
+            id = 3,
+            name = "France",
+            imageRes = R.drawable.france,
+            description = "The ever-famous, city of love."
+        )
     )
 
-    @OptIn(ExperimentalMaterial3Api::class)
-    @Composable
-    fun FakeHome() {
-        Scaffold(topBar = { TopAppBar(title = { Text("✈\uFE0FChoose Your next Travel Destination") }) }) { padding ->
-            LazyColumn(
-                contentPadding = padding,
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp)
-            ) {
-                items(sampleDestinations) { destination ->
-                    DestinationCard(
-                        destination = destination,
-                        onClick = {}
-                    )
+    Scaffold(
+        topBar = {
+            TopAppBar(
+                title = { Text("✈️ Choose Your Next Travel Destination") },
+                actions = {
+                    IconButton(onClick = { /* no-op */ }) {
+                        Icon(
+                            imageVector = Icons.Filled.Favorite,
+                            contentDescription = "Go to Favorites"
+                        )
+                    }
+                }
+            )
+        }
+    ) { padding ->
+        LazyColumn(
+            contentPadding = padding,
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+        ) {
+            items(sampleDestinations) { destination ->
+                Card(
+                    modifier = Modifier.fillMaxWidth(),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+                ) {
+                    Row(
+                        modifier = Modifier.padding(16.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(destination.name)
+                        Icon(
+                            imageVector = Icons.Filled.FavoriteBorder,
+                            contentDescription = "Favorite"
+                        )
+                    }
                 }
             }
         }
     }
-
-    FakeHome()
 }
